@@ -28,7 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent
 UPLOAD_DIR = BASE_DIR / "static" / "uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif"}
 
-app = Flask(__name__)
+# Gunakan path absolut untuk template dan static agar Vercel dapat menemukan file
+app = Flask(
+    __name__,
+    template_folder=str(BASE_DIR / "templates"),
+    static_folder=str(BASE_DIR / "static"),
+)
 app.config.from_object(Config)
 db.init_app(app)
 
