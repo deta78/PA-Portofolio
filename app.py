@@ -584,6 +584,22 @@ def initialize_database():
 def create_app():
     return app
 
+
+# Debug endpoint: tampilkan daftar file dalam folder templates (hapus setelah troubleshooting)
+@app.route("/__vercel_files")
+def vercel_files():
+    import os
+    try:
+        tpl_dir = str(BASE_DIR / "templates")
+        files = []
+        for root, dirs, filenames in os.walk(tpl_dir):
+            for fn in filenames:
+                files.append(os.path.relpath(os.path.join(root, fn), tpl_dir))
+        return jsonify({"templates_root": tpl_dir, "files": files})
+    except Exception as exc:
+        app.logger.exception("Failed listing templates")
+        return jsonify({"error": str(exc)}), 500
+
 if __name__ == "__main__":
     with app.app_context():
         initialize_database()
