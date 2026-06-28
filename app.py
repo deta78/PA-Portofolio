@@ -315,6 +315,7 @@ def admin_profiles():
         profile.name = request.form.get("name")
         profile.title = request.form.get("title")
         profile.bio = request.form.get("bio")
+        profile.footer_text = request.form.get("footer_text")
         profile.email = request.form.get("email")
         profile.instagram = request.form.get("instagram")
         profile.tiktok = request.form.get("tiktok")
@@ -509,6 +510,7 @@ def seed_database():
             instagram="#",
             tiktok="#",
             whatsapp="#",
+            footer_text="Halo, Saya Matumadeta Indra Putra Mulyana.",
         ))
 
     if AboutSection.query.count() == 0:
@@ -558,6 +560,8 @@ def ensure_profile_social_columns():
         statements.append("ALTER TABLE profiles ADD COLUMN instagram VARCHAR(255)")
     if "tiktok" not in existing_columns:
         statements.append("ALTER TABLE profiles ADD COLUMN tiktok VARCHAR(255)")
+    if "footer_text" not in existing_columns:
+        statements.append("ALTER TABLE profiles ADD COLUMN footer_text VARCHAR(255)")
 
     for statement in statements:
         db.session.execute(text(statement))

@@ -53,7 +53,7 @@
         <div class="hero-copy reveal">
           <h1>{{ profile.name if profile else 'Nama Kamu' }}</h1>
           <p class="hero-role">{{ profile.title if profile else 'Backend Developer | Python | Flask | Database | API' }}</p>
-
+          <p class="hero-description">{{ profile.bio if profile else 'Tulis bio singkat di halaman Admin.' }}</p>
           <div class="hero-actions">
         <a class="btn btn-primary" href="#projects">
           Lihat Proyek
@@ -61,23 +61,6 @@
         <a class="btn btn-outline" href="#contact">
           Kirim Pesan
         </a>
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat-card">
-          <strong>{{ projects|length }}</strong>
-          <span>Proyek</span>
-        </div>
-
-        <div class="stat-card">
-          <strong>{{ skills|length }}</strong>
-          <span>Skill</span>
-        </div>
-
-        <div class="stat-card">
-          <strong>{{ experiences|length }}</strong>
-          <span>Pengalaman</span>
-        </div>
       </div>
     </div>
 
@@ -331,8 +314,7 @@ def portfolio():
   <footer class="footer">
     <div class="container footer-inner">
       <p>
-        © 2026 {{ profile.name if profile else 'Nama Kamu' }}.
-        
+        © 2026 {% if profile and profile.footer_text %} {{ profile.footer_text }}{% endif %}
       </p>
 
 

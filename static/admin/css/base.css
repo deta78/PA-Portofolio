@@ -54,7 +54,7 @@ td { color: var(--text-muted); }
 .flash { padding: 13px 15px; border-radius: 16px; background: rgba(226,236,245,.1); border: 1px solid rgba(226,236,245,.14); color: var(--alice-blue); }
 .flash.success { border-color: rgba(164,167,227,.48); }
 .flash.danger, .flash.warning { border-color: rgba(110,51,119,.75); }
-.preview { display: block; width: min(100%, 420px); border-radius: 24px; border: 1px solid var(--card-border); margin-top: 18px; }
+.preview { display: block; width: min(100%, 240px); border-radius: 16px; border: 1px solid var(--card-border); margin-top: 18px; }
 .login-page { display: grid; place-items: center; padding: 28px; }
 .login-card { width: min(100%, 440px); padding: 30px; }
 .login-mark { margin-bottom: 18px; font-size: 22px; }

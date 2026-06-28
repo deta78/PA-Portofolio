@@ -10,6 +10,7 @@
   <label>Instagram<input name="instagram" value="{{ profile.instagram or '' }}" placeholder="https://instagram.com/username"></label>
   <label>TikTok<input name="tiktok" value="{{ profile.tiktok or '' }}" placeholder="https://www.tiktok.com/@username"></label>
   <label class="full">Bio<textarea name="bio" rows="6" required>{{ profile.bio }}</textarea></label>
+  <label>Footer Text<input name="footer_text" value="{{ profile.footer_text or '' }}" placeholder="Teks di footer, mis. Halo, Saya ..."></label>
   <label>URL Gambar<input name="image_url" value="{{ profile.image_url or '' }}" placeholder="Opsional, bisa URL Cloudinary"></label>
   <label>Upload Gambar<input type="file" name="image_file" accept="image/*"></label>
   <button class="btn full" type="submit">Simpan Profil</button>
