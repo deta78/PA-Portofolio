@@ -26,17 +26,20 @@ except Exception:
     resend = None
 
 BASE_DIR = Path(__file__).resolve().parent
-UPLOAD_DIR = BASE_DIR / "static" / "uploads"
+TEMPLATE_DIR = BASE_DIR / "templates"
+STATIC_DIR = BASE_DIR / "static"
+UPLOAD_DIR = STATIC_DIR / "uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif"}
 
-# Gunakan path absolut untuk template dan static agar Vercel dapat menemukan file
+# Path absolut supaya Flask/Vercel selalu menemukan folder templates dan static.
 app = Flask(
     __name__,
     root_path=str(BASE_DIR),
-    template_folder="templates",
-    static_folder="static",
+    template_folder=str(TEMPLATE_DIR),
+    static_folder=str(STATIC_DIR),
+    static_url_path="/static",
 )
-app.jinja_loader = FileSystemLoader(str(BASE_DIR / "templates"))
+app.jinja_loader = FileSystemLoader(str(TEMPLATE_DIR))
 app.config.from_object(Config)
 db.init_app(app)
 
@@ -582,6 +585,17 @@ def initialize_database():
         app.logger.error("Database initialization failed at request time: %s", exc)
     except Exception as exc:
         app.logger.exception("Unexpected error during request-time database setup: %s", exc)
+
+
+_database_initialized = False
+
+@app.before_request
+def initialize_database_once():
+    """Inisialisasi tabel database sekali saat serverless function mulai dipakai."""
+    global _database_initialized
+    if not _database_initialized:
+        initialize_database()
+        _database_initialized = True
 
 
 def create_app():
