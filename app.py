@@ -162,13 +162,29 @@ def add_admin_no_cache_headers(response):
     return response
 
 
+def safe_query_first(query_callable, fallback=None):
+    try:
+        return query_callable()
+    except Exception as exc:
+        app.logger.exception("Database query failed")
+        return fallback
+
+
+def safe_query_all(query_callable, fallback=None):
+    try:
+        return query_callable()
+    except Exception as exc:
+        app.logger.exception("Database query failed")
+        return fallback if fallback is not None else []
+
+
 @app.route("/")
 def home():
-    profile = Profile.query.first()
-    about_section = AboutSection.query.order_by(AboutSection.id.desc()).first()
-    skills = Skill.query.order_by(Skill.category.asc(), Skill.name.asc()).all()
-    experiences = Experience.query.order_by(Experience.id.desc()).all()
-    projects = Project.query.order_by(Project.id.desc()).all()
+    profile = safe_query_first(lambda: Profile.query.first())
+    about_section = safe_query_first(lambda: AboutSection.query.order_by(AboutSection.id.desc()).first())
+    skills = safe_query_all(lambda: Skill.query.order_by(Skill.category.asc(), Skill.name.asc()).all(), [])
+    experiences = safe_query_all(lambda: Experience.query.order_by(Experience.id.desc()).all(), [])
+    projects = safe_query_all(lambda: Project.query.order_by(Project.id.desc()).all(), [])
     return render_template(
         "utama/index.html",
         profile=profile,
@@ -208,8 +224,11 @@ def contact_submit():
 
 @app.route("/api/portfolio")
 def api_portfolio():
-    profile = Profile.query.first()
-    about_section = AboutSection.query.order_by(AboutSection.id.desc()).first()
+    profile = safe_query_first(lambda: Profile.query.first())
+    about_section = safe_query_first(lambda: AboutSection.query.order_by(AboutSection.id.desc()).first())
+    skills = safe_query_all(lambda: Skill.query.all(), [])
+    experiences = safe_query_all(lambda: Experience.query.all(), [])
+    projects = safe_query_all(lambda: Project.query.all(), [])
     return jsonify({
         "profile": {
             "name": profile.name if profile else "Nama Kamu",
@@ -223,9 +242,9 @@ def api_portfolio():
             "subtitle": about_section.subtitle if about_section else "",
             "description": about_section.description if about_section else (profile.bio if profile else ""),
         },
-        "skills": [{"name": s.name, "category": s.category, "level": s.level} for s in Skill.query.all()],
-        "experiences": [{"title": e.title, "organization": e.organization, "period": e.period} for e in Experience.query.all()],
-        "projects": [{"title": p.title, "tech_stack": p.tech_stack, "image_url": p.image_url} for p in Project.query.all()],
+        "skills": [{"name": s.name, "category": s.category, "level": s.level} for s in skills],
+        "experiences": [{"title": e.title, "organization": e.organization, "period": e.period} for e in experiences],
+        "projects": [{"title": p.title, "tech_stack": p.tech_stack, "image_url": p.image_url} for p in projects],
     })
 
 
