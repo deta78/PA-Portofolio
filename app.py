@@ -5,6 +5,7 @@ from pathlib import Path
 from flask import (
     Flask, render_template, request, redirect, url_for, session, flash, jsonify
 )
+from jinja2 import FileSystemLoader
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import secure_filename
 
@@ -31,9 +32,11 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif"}
 # Gunakan path absolut untuk template dan static agar Vercel dapat menemukan file
 app = Flask(
     __name__,
-    template_folder=str(BASE_DIR / "templates"),
-    static_folder=str(BASE_DIR / "static"),
+    root_path=str(BASE_DIR),
+    template_folder="templates",
+    static_folder="static",
 )
+app.jinja_loader = FileSystemLoader(str(BASE_DIR / "templates"))
 app.config.from_object(Config)
 db.init_app(app)
 
