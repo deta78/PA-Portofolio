@@ -1,0 +1,6 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Kontak{% endblock %}
+{% block content %}
+<section class="page-head"><span>Kontak</span><h1>Data Pesan Kontak</h1></p></section>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Nama</th><th>Email</th><th>Subject</th><th>Pesan</th><th>Status</th><th>Email</th><th>Aksi</th></tr></thead><tbody>{% for c in contacts %}<tr><td>{{ c.name }}</td><td>{{ c.email }}</td><td>{{ c.subject }}</td><td class="message-cell">{{ c.message }}</td><td>{{ 'Dibaca' if c.is_read else 'Baru' }}</td><td>{{ c.email_status }}</td><td class="actions"><form method="POST" action="{{ url_for('mark_contact_read', item_id=c.id) }}"><button>Baca</button></form><form method="POST" action="{{ url_for('delete_contact', item_id=c.id) }}" onsubmit="return confirm('Hapus pesan ini?')"><button>Hapus</button></form></td></tr>{% else %}<tr><td colspan="7">Belum ada pesan.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

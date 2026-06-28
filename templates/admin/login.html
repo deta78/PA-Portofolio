@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/base.css') }}">
+</head>
+<body class="login-page">
+  <form class="login-card" method="POST" autocomplete="off">
+    <h1>Login Admin</h1>
+    <p>Masukkan username dan password admin untuk mengelola profil, skill, pengalaman, proyek, dan kontak.</p>
+
+    {% if error %}
+      <div class="flash danger">{{ error }}</div>
+    {% endif %}
+
+    <label>
+      Username
+      <input name="username" placeholder="Masukkan username" autocomplete="off" required>
+    </label>
+
+    <label>
+      Password
+      <div class="password-field">
+        <input id="passwordInput" type="password" name="password" placeholder="Masukkan password" autocomplete="new-password" required>
+        <button id="togglePassword" class="password-eye" type="button" aria-label="Tampilkan password">👁</button>
+      </div>
+    </label>
+
+    <button class="btn" type="submit">Masuk</button>
+  </form>
+
+  <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Tentang{% endblock %}
+{% block content %}
+<section class="page-head admin-about-page">
+  <span>Tentang</span>
+  <h1>Deskripsi Halaman Tentang</h1>
+</section>
+
+<form class="panel form-grid admin-about-page" method="POST" action="{{ url_for('admin_about', item_id=item.id) if item else url_for('admin_about') }}">
+  <label class="full">Deskripsi<textarea name="description" rows="10" required>{{ item.description if item else '' }}</textarea></label>
+  <button class="btn full" type="submit">Simpan Deskripsi</button>
+</form>
+
+<section class="panel admin-about-page">
+  <h2>Preview</h2>
+  <p style="color: var(--text-muted); line-height: 1.8;">{{ item.description if item else 'Belum ada deskripsi yang disimpan.' }}</p>
+</section>
+{% endblock %}

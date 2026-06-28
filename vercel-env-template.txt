@@ -1,0 +1,15 @@
+SECRET_KEY=ganti_dengan_secret_key_panjang
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123
+DB_HOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+DB_PORT=4000
+DB_USER=username_tidb_kamu
+DB_PASSWORD=password_tidb_kamu
+DB_NAME=portfolio_db
+DB_SSL=true
+CLOUDINARY_CLOUD_NAME=cloud_name_kamu
+CLOUDINARY_API_KEY=api_key_kamu
+CLOUDINARY_API_SECRET=api_secret_kamu
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxx
+CONTACT_RECEIVER_EMAIL=email_penerima_kamu@example.com
+CONTACT_SENDER_EMAIL=Portfolio <onboarding@resend.dev>

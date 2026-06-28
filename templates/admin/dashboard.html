@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<section class="page-head">
+  <span>Dashboard</span>
+  <h1>Kelola Data Portfolio</h1>
+  
+</section>
+
+<div class="stats-grid">
+  
+  <div class="stat"><strong>{{ stats.skills }}</strong><span>Skill</span></div>
+  <div class="stat"><strong>{{ stats.experiences }}</strong><span>Pengalaman</span></div>
+  <div class="stat"><strong>{{ stats.projects }}</strong><span>Proyek</span></div>
+  <div class="stat"><strong>{{ stats.contacts }}</strong><span>Kontak</span></div>
+</div>
+
+<section class="panel">
+  <h2>Pesan Kontak Terbaru</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nama</th><th>Email</th><th>Subject</th><th>Status Email</th><th>Tanggal</th></tr></thead>
+      <tbody>
+        {% for c in contacts %}
+        <tr><td>{{ c.name }}</td><td>{{ c.email }}</td><td>{{ c.subject }}</td><td>{{ c.email_status }}</td><td>{{ c.created_at.strftime('%d/%m/%Y') }}</td></tr>
+        {% else %}<tr><td colspan="5">Belum ada pesan.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

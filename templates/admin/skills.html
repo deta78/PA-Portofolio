@@ -1,0 +1,13 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Skill{% endblock %}
+{% block content %}
+<section class="page-head"><span>Skill</span><h1>CRUD Skill</h1></p></section>
+<form class="panel form-grid" method="POST" action="{{ url_for('admin_skills', item_id=item.id) if item else url_for('admin_skills') }}">
+  <label>Nama Skill<input name="name" value="{{ item.name if item else '' }}" required></label>
+  <label>Kategori<input name="category" value="{{ item.category if item else '' }}" placeholder="Backend / Database / Frontend" required></label>
+  <label>Level 0-100<input type="number" min="0" max="100" name="level" value="{{ item.level if item else 70 }}"></label>
+  <label class="full">Deskripsi<textarea name="description" rows="4">{{ item.description if item else '' }}</textarea></label>
+  <button class="btn full" type="submit">{{ 'Update Skill' if item else 'Tambah Skill' }}</button>
+</form>
+<section class="panel"><h2>Daftar Skill</h2>{% include 'admin/table_skills.html' %}</section>
+{% endblock %}

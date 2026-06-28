@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Proyek{% endblock %}
+{% block content %}
+<section class="page-head"><span>Proyek</span><h1>CRUD Proyek</h1></section>
+<form class="panel form-grid" method="POST" enctype="multipart/form-data" action="{{ url_for('admin_projects', item_id=item.id) if item else url_for('admin_projects') }}">
+  <label>Judul Proyek<input name="title" value="{{ item.title if item else '' }}" required></label>
+  <label>Tech Stack<input name="tech_stack" value="{{ item.tech_stack if item else '' }}" placeholder="Python, Flask, TiDB"></label>
+  <label>Demo URL<input name="demo_url" value="{{ item.demo_url if item else '' }}"></label>
+  <label>GitHub URL<input name="github_url" value="{{ item.github_url if item else '' }}"></label>
+  <label>URL Gambar<input name="image_url" value="{{ item.image_url if item else '' }}" placeholder="Opsional"></label>
+  <label>Upload Gambar<input type="file" name="image_file" accept="image/*"></label>
+  <label class="full">Deskripsi<textarea name="description" rows="4" required>{{ item.description if item else '' }}</textarea></label>
+  <button class="btn full" type="submit">{{ 'Update Proyek' if item else 'Tambah Proyek' }}</button>
+</form>
+<section class="panel"><h2>Daftar Proyek</h2><div class="table-wrap"><table><thead><tr><th>Judul</th><th>Tech Stack</th><th>Gambar</th><th>Aksi</th></tr></thead><tbody>{% for p in items %}<tr><td>{{ p.title }}</td><td>{{ p.tech_stack }}</td><td>{% if p.image_url %}<a href="{{ p.image_url }}" target="_blank">Lihat</a>{% else %}-{% endif %}</td><td class="actions"><a href="{{ url_for('admin_projects', item_id=p.id) }}">Edit</a><form method="POST" action="{{ url_for('delete_project', item_id=p.id) }}" onsubmit="return confirm('Hapus proyek ini?')"><button>Hapus</button></form></td></tr>{% else %}<tr><td colspan="4">Belum ada data.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Pengalaman{% endblock %}
+{% block content %}
+<section class="page-head"><span>Pengalaman</span><h1>CRUD Pengalaman</h1></p></section>
+<form class="panel form-grid" method="POST" action="{{ url_for('admin_experiences', item_id=item.id) if item else url_for('admin_experiences') }}">
+  <label>Judul<input name="title" value="{{ item.title if item else '' }}" required></label>
+  <label>Organisasi<input name="organization" value="{{ item.organization if item else '' }}"></label>
+  <label>Periode<input name="period" value="{{ item.period if item else '' }}" placeholder="2026 / Jan 2026 - Sekarang"></label>
+  <label class="full">Deskripsi<textarea name="description" rows="4">{{ item.description if item else '' }}</textarea></label>
+  <button class="btn full" type="submit">{{ 'Update Pengalaman' if item else 'Tambah Pengalaman' }}</button>
+</form>
+<section class="panel"><h2>Daftar Pengalaman</h2><div class="table-wrap"><table><thead><tr><th>Judul</th><th>Organisasi</th><th>Periode</th><th>Aksi</th></tr></thead><tbody>{% for e in items %}<tr><td>{{ e.title }}</td><td>{{ e.organization }}</td><td>{{ e.period }}</td><td class="actions"><a href="{{ url_for('admin_experiences', item_id=e.id) }}">Edit</a><form method="POST" action="{{ url_for('delete_experience', item_id=e.id) }}" onsubmit="return confirm('Hapus pengalaman ini?')"><button>Hapus</button></form></td></tr>{% else %}<tr><td colspan="4">Belum ada data.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

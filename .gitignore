@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+instance/
+static/uploads/*
+!static/uploads/.gitkeep
+.venv/
+venv/
+
+.vercel
+.env*
+!.env.example

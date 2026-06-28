@@ -1,0 +1,18 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Profil{% endblock %}
+{% block content %}
+<section class="page-head"><span>Profil</span><h1>Data Profil</h1><p></p></section>
+<form class="panel form-grid" method="POST" enctype="multipart/form-data">
+  <label>Nama<input name="name" value="{{ profile.name }}" required></label>
+  <label>Title<input name="title" value="{{ profile.title }}" required></label>
+  <label>Email<input name="email" value="{{ profile.email or '' }}"></label>
+  <label>WhatsApp<input name="whatsapp" value="{{ profile.whatsapp or '' }}"></label>
+  <label>Instagram<input name="instagram" value="{{ profile.instagram or '' }}" placeholder="https://instagram.com/username"></label>
+  <label>TikTok<input name="tiktok" value="{{ profile.tiktok or '' }}" placeholder="https://www.tiktok.com/@username"></label>
+  <label class="full">Bio<textarea name="bio" rows="6" required>{{ profile.bio }}</textarea></label>
+  <label>URL Gambar<input name="image_url" value="{{ profile.image_url or '' }}" placeholder="Opsional, bisa URL Cloudinary"></label>
+  <label>Upload Gambar<input type="file" name="image_file" accept="image/*"></label>
+  <button class="btn full" type="submit">Simpan Profil</button>
+</form>
+{% if profile.image_url %}<img class="preview" src="{{ profile.image_url }}" alt="Preview profil">{% endif %}
+{% endblock %}
